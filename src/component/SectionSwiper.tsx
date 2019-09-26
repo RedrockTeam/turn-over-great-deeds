@@ -30,19 +30,19 @@ const Image = styled.div`
 const Content = styled.div`
   margin: 50px 50px 0 50px;
   color: #7c3d3f;
-  text-align: center;
   .title {
-    font-size: 36px;
-    margin-bottom: 22px;
+    font-size: 30px;
+    margin-bottom: 12px;
+    text-align: center;
   }
   .describe {
     font-size: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
-    height: 48px;
+    line-height: 30px;
   }
 `;
 
@@ -74,7 +74,10 @@ const SectionSwiper: React.FC = () => {
             />
             <Content>
               <div className="title">{item.content}</div>
-              <div className="describe">{item.describe}</div>
+              <div className="describe">
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                {item.describe}
+              </div>
             </Content>
           </div>
         ))}

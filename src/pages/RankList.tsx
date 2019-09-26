@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-px2vw';
-import Swiper from 'react-id-swiper';
 import RankListAvatarPng from '../assets/image/RankListAvatar.png';
 import RankListMyPng from '../assets/image/RankListMy.png';
 import RankListRankPng from '../assets/image/RankListRank.png';
@@ -11,7 +10,8 @@ import CPng from '../assets/image/3.png';
 import { Theme } from '../styled';
 import BaseBack from '../component/BaseBack';
 import { Back } from './Choose';
-import { SwiperOptions } from 'swiper';
+import { useRank } from '../utils/useFetch';
+import convertFloatToInt from '../utils/convertFloatToInt';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -20,6 +20,10 @@ const Wrapper = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const Avatar = styled.div`
@@ -27,7 +31,7 @@ const Avatar = styled.div`
   height: 169px;
   width: 196px;
   background-image: url("${RankListAvatarPng}");
-  margin: 50px auto 25px auto;
+  margin: 0 auto 25px auto;
   position: relative;
   & > div {
     position: absolute;
@@ -39,14 +43,14 @@ const Avatar = styled.div`
   }
 `;
 
-const RankListMyIcon = styled.div`
+export const RankListMyIcon = styled.div`
   background-image: url("${RankListMyPng}");
   height: 31px;
   width: 33px;
   background-size: cover;
   margin-right: 14px;
 `;
-const RankListRankIcon = styled.div`
+export const RankListRankIcon = styled.div`
   background-image: url("${RankListRankPng}");
   height: 32px;
   width: 48px;
@@ -60,6 +64,7 @@ const Info = styled.div`
   font-family: LeZhen, sans-serif;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 const Card = styled.div`
   background-size: cover;
@@ -85,14 +90,17 @@ const ItemWrapper = styled.div`
   justify-content: space-between;
   span {
     height: 61px;
-    width: 69px;
     line-height: 61px;
     font-size: 32px;
     color: #7c3d3f;
     text-align: center;
   }
   & > span:nth-child(1) {
+    width: 69px;
     font-family: LeZhen, sans-serif;
+  }
+  & > span:nth-child(2) {
+    width: 300px;
   }
   & > span:nth-child(3) {
     font-family: LeZhen, sans-serif;
@@ -108,21 +116,24 @@ const CommonIcon = styled.div`
 const SwiperWrapper = styled.div`
   //height: 540px;
   //overflow: hidden;
-  width: 520px;
+  width: 560px;
   margin: 0 auto;
   overflow-y: auto;
   overflow-x: hidden;
   height: 600px;
+  & > div {
+    margin-left: -16px;
+  }
 `;
 
 interface data {
-  RedId: string;
+  RedId?: string;
   NickName: string;
   Total: number;
   index?: number;
 }
 
-const Item: React.FC<data> = ({ RedId, NickName, Total, index = 0 }) => {
+const Item: React.FC<data> = ({ NickName, Total, index = 0 }) => {
   const image = [APng, BPng, CPng];
   return (
     <ItemWrapper>
@@ -133,153 +144,17 @@ const Item: React.FC<data> = ({ RedId, NickName, Total, index = 0 }) => {
           }}
         />
       )}
-      {index > 2 && <span>{index + 1}</span>}
-      <span>{NickName}</span>
-      <span>{Total}s</span>
+      {index > 2 && <span className="list">{index + 1}</span>}
+      <span className="NickName"> {NickName}</span>
+      <span className="Total">{convertFloatToInt(Total)}s</span>
     </ItemWrapper>
   );
 };
 
 const RankListPage: React.FC = () => {
-  const result = {
-    rank: 4,
-    totalTime: 300,
-  };
-  const rq: data[] = [
-    {
-      RedId: '5be0af71e5831e4532c3909d2983fba03c833568',
-      NickName: '余歌',
-      Total: 100,
-    },
-    {
-      RedId: 'faf',
-      NickName: '余d',
-      Total: 250,
-    },
-    {
-      RedId: 'zhysd',
-      NickName: '余r',
-      Total: 300,
-    },
-    {
-      RedId: 'vzv',
-      NickName: '余4',
-      Total: 300,
-    },
-    {
-      RedId: 'dasd',
-      NickName: '余5',
-      Total: 400,
-    },
-    {
-      RedId: '5be0af71e5831e4532c3909d2983fba03c833568',
-      NickName: '余歌',
-      Total: 100,
-    },
-    {
-      RedId: 'faf',
-      NickName: '余d',
-      Total: 250,
-    },
-    {
-      RedId: 'zhysd',
-      NickName: '余r',
-      Total: 300,
-    },
-    {
-      RedId: 'vzv',
-      NickName: '余4',
-      Total: 300,
-    },
-    {
-      RedId: 'dasd',
-      NickName: '余5',
-      Total: 400,
-    },
-    {
-      RedId: '5be0af71e5831e4532c3909d2983fba03c833568',
-      NickName: '余歌',
-      Total: 100,
-    },
-    {
-      RedId: 'faf',
-      NickName: '余d',
-      Total: 250,
-    },
-    {
-      RedId: 'zhysd',
-      NickName: '余r',
-      Total: 300,
-    },
-    {
-      RedId: 'vzv',
-      NickName: '余4',
-      Total: 300,
-    },
-    {
-      RedId: 'dasd',
-      NickName: '余5',
-      Total: 400,
-    },
-    {
-      RedId: '5be0af71e5831e4532c3909d2983fba03c833568',
-      NickName: '余歌',
-      Total: 100,
-    },
-    {
-      RedId: 'faf',
-      NickName: '余d',
-      Total: 250,
-    },
-    {
-      RedId: 'zhysd',
-      NickName: '余r',
-      Total: 300,
-    },
-    {
-      RedId: 'vzv',
-      NickName: '余4',
-      Total: 300,
-    },
-    {
-      RedId: 'dasd',
-      NickName: '余5',
-      Total: 400,
-    },
-    {
-      RedId: '5be0af71e5831e4532c3909d2983fba03c833568',
-      NickName: '余歌',
-      Total: 100,
-    },
-    {
-      RedId: 'faf',
-      NickName: '余d',
-      Total: 250,
-    },
-    {
-      RedId: 'zhysd',
-      NickName: '余r',
-      Total: 300,
-    },
-    {
-      RedId: 'vzv',
-      NickName: '余4',
-      Total: 300,
-    },
-    {
-      RedId: 'dasd',
-      NickName: '余5',
-      Total: 400,
-    },
-  ];
-  const params: SwiperOptions = {
-    direction: 'vertical',
-    slidesPerView: 'auto',
-    freeMode: true,
-    scrollbar: {
-      el: '.swiper-scrollbar',
-    },
-  };
+  const [rank] = useState(localStorage.getItem('rank'));
+  const [totalTime] = useState(Number(localStorage.getItem('totalTime')));
+  const { data: rq } = useRank();
   return (
     <Wrapper>
       <Back>
@@ -293,23 +168,26 @@ const RankListPage: React.FC = () => {
           }}
         />
       </Avatar>
-      <Info>
-        <RankListMyIcon />
-        <span>我的: {result.totalTime}s</span>
-        <RankListRankIcon />
-        <span>排名: {result.rank}</span>
-      </Info>
+      {totalTime > 0 ? (
+        <Info>
+          <RankListMyIcon />
+          <span>我的: {convertFloatToInt(totalTime)}s</span>
+          <RankListRankIcon />
+          <span>排名: {rank}</span>
+        </Info>
+      ) : (
+        ''
+      )}
       <Card>
         <Title>排行榜</Title>
         <SwiperWrapper>
           <div>
             {rq.map((item, index) => (
               <Item
-                RedId={item.RedId}
                 NickName={item.NickName}
                 Total={item.Total}
                 index={index}
-                key={index}
+                key={item.RedId}
               />
             ))}
           </div>

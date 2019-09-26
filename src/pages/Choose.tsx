@@ -7,6 +7,7 @@ import ChooseCard from '../assets/image/ChooseCard.png';
 import BaseUntiePng from '../assets/image/BaseUntie.png';
 import BaseLockUpPng from '../assets/image/BaseLockUp.png';
 import BaseBack from '../component/BaseBack';
+import { usePassTime } from '../utils/useFetch';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -15,6 +16,10 @@ const Wrapper = styled.div`
   right: 0;
   bottom: 0;
   background-color: ${Theme.color.backgroundColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const Back = styled.div`
@@ -28,7 +33,6 @@ const Title = styled.div`
   background-size: cover;
   height: 206px;
   width: 647px;
-  margin: 70px auto 0 auto;
 `;
 
 const Card = styled.div`
@@ -38,7 +42,7 @@ const Card = styled.div`
   width: 667px;
   margin: 0 auto;
   & > div {
-    padding: 300px 100px 60px 100px;
+    padding: 300px 90px 0 120px;
   }
 `;
 
@@ -65,9 +69,13 @@ const BaseUntieIcon = styled.div`
   width: 52px;
 `;
 
-const time = Array(5).fill(-1);
-
 const ChoosePage: React.FC = () => {
+  const { data } = usePassTime();
+  const time: number[] = [];
+  Object.keys(data).forEach(i => {
+    // @ts-ignore
+    time.push(data[i]);
+  });
   const { history } = useRouter();
   const handelClick = (step: number) => {
     history.push(`/section/${step}`);
@@ -81,16 +89,17 @@ const ChoosePage: React.FC = () => {
       <Card>
         <div>
           {time.map((item, index) => {
-            const isLocked = !(item > -1 || index === 0);
+            const isLocked = !(item > 0 || index === 0);
+            const canChoose = time[index - 1] > 0 || !isLocked;
             return (
               <Item
                 key={index}
                 style={{ color: isLocked ? '#ca9880' : '#f56c36' }}
-                onClick={() => isLocked || handelClick(index + 1)}
+                onClick={() => canChoose && handelClick(index + 1)}
               >
                 <div className="index">{index + 1}</div>
-                <div className="time">{item > -1 ? item : '待挑战'}</div>
-                {isLocked ? <LockUpIcon /> : <BaseUntieIcon />}
+                <div className="time">{item > 0 ? `${item}s` : '待挑战'}</div>
+                {!canChoose ? <LockUpIcon /> : <BaseUntieIcon />}
               </Item>
             );
           })}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-px2vw';
 import { animated, useTrail } from 'react-spring';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,9 @@ import { Theme } from '../styled';
 import SuccessTitlePng from '../assets/image/SuccessTitle.png';
 import SuccessCardPng from '../assets/image/SuccessCard.png';
 import { BaseRedButton } from '../component/BaseButton';
+import { RankListMyIcon, RankListRankIcon } from './RankList';
+import { usePassAll } from '../utils/useFetch';
+import convertFloatToInt from '../utils/convertFloatToInt';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -14,6 +17,10 @@ const Wrapper = styled.div`
   right: 0;
   bottom: 0;
   background-color: ${Theme.color.backgroundColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const Title = styled(animated.div)`
@@ -21,7 +28,6 @@ const Title = styled(animated.div)`
   background-image: url("${SuccessTitlePng}");
   height: 134px;
   width: 600px;
-  margin: 120px auto 20px auto;
 `;
 
 const Card = styled(animated.div)`
@@ -33,11 +39,14 @@ const Card = styled(animated.div)`
 `;
 
 const Info = styled(animated.div)`
-  text-align: center;
   color: #f46b34;
   font-size: 36px;
   font-family: LeZhen, sans-serif;
   margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 `;
 
 const Back = styled(Link)`
@@ -62,16 +71,21 @@ const SuccessPage: React.FC = () => {
       friction: 80,
     },
   });
-  const result = {
-    rank: 4,
-    totalTime: 300,
-  };
+  const { data: result } = usePassAll();
+  useEffect(() => {
+    if (result.totalTime > 0) {
+      localStorage.setItem('totalTime', result.totalTime.toString());
+      localStorage.setItem('rank', result.rank.toString());
+    }
+  }, [result]);
   return (
     <Wrapper>
       <Title style={Animation[2]} />
       <Info style={Animation[1]}>
-        <div>您的成绩: {result.totalTime}s</div>
-        <div>排名: {result.rank}</div>
+        <RankListMyIcon />
+        <span>我的: {convertFloatToInt(result.totalTime)}s</span>
+        <RankListRankIcon />
+        <span>排名: {result.rank}</span>
       </Info>
       <Card style={Animation[0]} />
       <animated.div style={Animation[2]}>
