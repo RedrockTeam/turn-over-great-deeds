@@ -10,7 +10,7 @@ import CPng from '../assets/image/3.png';
 import { Theme } from '../styled';
 import BaseBack from '../component/BaseBack';
 import { Back } from './Choose';
-import { useRank } from '../utils/useFetch';
+import { usePassAll, useRank } from '../utils/useFetch';
 import convertFloatToInt from '../utils/convertFloatToInt';
 
 const Wrapper = styled.div`
@@ -40,6 +40,7 @@ const Avatar = styled.div`
     height: 131px;
     width: 131px;
     border-radius: 100%;
+    background-size: cover;
   }
 `;
 
@@ -70,7 +71,7 @@ const Card = styled.div`
   background-size: cover;
   background-image: url("${RankListCardPng}");
   height: 882px;
-  width: 670px;
+  width: 678px;
   margin: 11px auto 0 auto;
 `;
 
@@ -101,6 +102,9 @@ const ItemWrapper = styled.div`
   }
   & > span:nth-child(2) {
     width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   & > span:nth-child(3) {
     font-family: LeZhen, sans-serif;
@@ -114,8 +118,6 @@ const CommonIcon = styled.div`
 `;
 
 const SwiperWrapper = styled.div`
-  //height: 540px;
-  //overflow: hidden;
   width: 560px;
   margin: 0 auto;
   overflow-y: auto;
@@ -145,15 +147,27 @@ const Item: React.FC<data> = ({ NickName, Total, index = 0 }) => {
         />
       )}
       {index > 2 && <span className="list">{index + 1}</span>}
-      <span className="NickName"> {NickName}</span>
-      <span className="Total">{convertFloatToInt(Total)}s</span>
+      <span>{NickName}</span>
+      <span>{convertFloatToInt(Total)}s</span>
     </ItemWrapper>
   );
 };
 
 const RankListPage: React.FC = () => {
-  const [rank] = useState(localStorage.getItem('rank'));
-  const [totalTime] = useState(Number(localStorage.getItem('totalTime')));
+  let result = { rank: -1, totalTime: -1 };
+  if (localStorage.getItem('rank')) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data } = usePassAll();
+    result = data;
+  }
+  const [avatar] = useState(
+    (
+      localStorage.getItem('headImgUrl') ||
+      `https://cdn.v2ex.com/gravatar/${localStorage.getItem(
+        'openid',
+      )}?s=128&d=retro`
+    ).replace(/^http:\/\//i, 'https://'),
+  );
   const { data: rq } = useRank();
   return (
     <Wrapper>
@@ -163,17 +177,16 @@ const RankListPage: React.FC = () => {
       <Avatar>
         <div
           style={{
-            backgroundImage:
-              'url("https://cdn.v2ex.com/avatar/a47c/381e/110591_large.png")',
+            backgroundImage: `url("${avatar}")`,
           }}
         />
       </Avatar>
-      {totalTime > 0 ? (
+      {result.totalTime > 0 ? (
         <Info>
           <RankListMyIcon />
-          <span>我的: {convertFloatToInt(totalTime)}s</span>
+          <span>我的: {convertFloatToInt(result.totalTime)}s</span>
           <RankListRankIcon />
-          <span>排名: {rank}</span>
+          <span>排名: {result.rank}</span>
         </Info>
       ) : (
         ''
@@ -187,7 +200,7 @@ const RankListPage: React.FC = () => {
                 NickName={item.NickName}
                 Total={item.Total}
                 index={index}
-                key={item.RedId}
+                key={item.OpenId}
               />
             ))}
           </div>

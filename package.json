@@ -1,14 +1,14 @@
 {
   "name": "turn-over-great-deeds",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-fastclick": "^3.0.2",
     "react-id-swiper": "^2.3.2",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
+    "react-router-ga": "^1.2.1",
     "react-scripts": "3.1.2",
     "react-spring": "^8.0.27",
     "styled-components": "^4.3.2",
@@ -22,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "commit": "git-cz"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,7 +50,7 @@
     "@types/swiper": "^4.4.5",
     "@typescript-eslint/eslint-plugin": "2.3.0",
     "@typescript-eslint/parser": "^2.3.0",
-    "customize-cra": "^0.7.0",
+    "commitizen": "^4.0.3",
     "eslint": "^6.4.0",
     "eslint-config-airbnb-typescript": "^5.0.0",
     "eslint-config-prettier": "^6.3.0",
@@ -58,7 +59,6 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-react-hooks": "1.7.0",
-    "http-proxy-middleware": "^0.20.0",
     "prettier": "1.18.2"
   },
   "homepage": "https://upred.atowerlight.cn/tesgs/"

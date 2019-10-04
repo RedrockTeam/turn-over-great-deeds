@@ -31,10 +31,10 @@ const Content = styled(animated.div)`
   background-image: url(${SectionPassContentPng});
   background-size: cover;
   width: 660px;
-  height: 853px;
+  height: 866px;
   position: relative;
   & > div {
-    padding: 134px 48px 0 50px;
+    padding: 134px 50px 0 50px;
   }
   &::before {
     content: '';
@@ -45,7 +45,7 @@ const Content = styled(animated.div)`
     bottom: 0;
     background-image: url("${BaseTopPng}");
     background-size: cover;
-    margin-top: 10px;
+    margin-top: 20px;
     height: 171px;
     width: 660px;
     z-index: 2;
@@ -89,7 +89,9 @@ const Control = styled.div`
   display: flex;
   justify-content: space-between;
   width: 366px;
-  margin: 10px auto 0 auto;
+  position: absolute;
+  bottom: 64px;
+  left: 148px;
 `;
 
 const Time: React.FC<{ time: number }> = ({ time }) => (
@@ -144,18 +146,24 @@ const SectionMask: React.FC = () => {
       <Content style={Animation[0]}>
         <div>
           <SectionSwiper />
-          <Control>
-            <Link to="/">
-              <BaseOrangeButton>返回首页</BaseOrangeButton>
-            </Link>
+          <Control
+            style={{
+              justifyContent: stepNum === 5 ? 'center' : 'space-between',
+            }}
+          >
+            {stepNum !== 5 && (
+              <Link replace to="/">
+                <BaseOrangeButton>返回首页</BaseOrangeButton>
+              </Link>
+            )}
             {count > 0 && <BaseRedButton>{count}s</BaseRedButton>}
             {count < 1 && stepNum !== 5 && (
-              <Link to={`/section/${stepNum + 1}`}>
+              <Link replace to={`/section/${stepNum + 1}`}>
                 <BaseRedButton>下一关</BaseRedButton>
               </Link>
             )}
             {count < 1 && stepNum === 5 && (
-              <Link to="/success">
+              <Link replace to="/success">
                 <BaseOrangeButton>挑战成功</BaseOrangeButton>
               </Link>
             )}

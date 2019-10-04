@@ -112,7 +112,7 @@ export default [
       content: '北斗导航定位卫星',
       img: require('../assets/image/card/5A.jpg'),
       describe:
-        '中国自行研制的全球卫星导航系统，继美国全球定位系统（GPS）、俄罗斯格洛纳斯卫星导航系统（GLONASS）之后第三个成熟的卫星导航系统。2014年11月，中国北斗卫星获联合国正式认可可媲美GPS。青蒿素的发现。中国抗疟新药的研究源于1967年成立的五二三项目。屠呦呦带领团队多年探索发现青蒿素，可有效降低疟疾患者死亡率，2015年10月5日，荣获诺贝尔生理学或医学奖，成为中国大陆第一个获得自然科学领域诺贝尔奖的科学家。',
+        '中国自行研制的全球卫星导航系统，继美国全球定位系统（GPS）、俄罗斯格洛纳斯卫星导航系统（GLONASS）之后第三个成熟的卫星导航系统。2014年11月，中国北斗卫星获联合国正式认可可媲美GPS。',
     },
     {
       content: '青蒿素的发现',
@@ -124,7 +124,7 @@ export default [
       content: '中国天眼',
       img: require('../assets/image/card/5C.jpg'),
       describe:
-        '世界上最大口径射电望远镜。由六根钢索拉起馈源舱，将重达30吨的仓体在高空精准定位，误差不超过十毫米。工程难度，世界上前所未有。具有中国独立自主知识产权的FAST，是世界上已经建造完成的口径最大、最具威力的单天线射电望远镜，其设计综合体现了我国高技术创新能力。。',
+        '世界上最大口径射电望远镜。由六根钢索拉起馈源舱，将重达30吨的仓体在高空精准定位，误差不超过十毫米。工程难度，世界上前所未有。具有中国独立自主知识产权的FAST，是世界上已经建造完成的口径最大、最具威力的单天线射电望远镜，其设计综合体现了我国高技术创新能力。',
     },
     {
       content: '2016中国杭州G20峰会',
@@ -136,7 +136,7 @@ export default [
       content: '中国C919大型客机',
       img: require('../assets/image/card/5E.jpg'),
       describe:
-        'COMACC919，中国首款按照最新国际适航标准，具有自主知识产权的干线民用飞机。2017年5月5日成功首飞。让中国的大飞机飞上蓝天，是国家的意志，人民的意志。',
+        'C919，中国首款按照最新国际适航标准，具有自主知识产权的干线民用飞机。2017年5月5日成功首飞。让中国的大飞机飞上蓝天，是国家的意志，人民的意志。',
     },
     {
       content: '港珠澳大桥',
@@ -172,8 +172,8 @@ export const cardsSize: {
   {
     width: 282,
     height: 359,
-    marginRight: 34,
-    marginBottom: 36,
+    marginRight: 17,
+    marginBottom: 18,
     imageHeight: 232,
     imageWidth: 245,
     fontSize: 24,
@@ -190,8 +190,8 @@ export const cardsSize: {
   {
     width: 195,
     height: 250,
-    marginRight: 24,
-    marginBottom: 26,
+    marginRight: 12,
+    marginBottom: 13,
     imageHeight: 160,
     imageWidth: 165,
     fontSize: 20,
@@ -199,8 +199,8 @@ export const cardsSize: {
   {
     width: 166,
     height: 212,
-    marginRight: 29,
-    marginBottom: 29,
+    marginRight: 14.5,
+    marginBottom: 14.5,
     imageHeight: 137,
     imageWidth: 145,
     fontSize: 16,
@@ -208,8 +208,8 @@ export const cardsSize: {
   {
     width: 149,
     height: 190,
-    marginRight: 28,
-    marginBottom: 30,
+    marginRight: 14,
+    marginBottom: 15,
     imageHeight: 125,
     imageWidth: 131,
     fontSize: 14,

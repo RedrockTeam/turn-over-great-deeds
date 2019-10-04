@@ -99,7 +99,9 @@ const Card: React.FC<ICardProps> = ({
         height,
         width,
         marginRight,
+        marginLeft: marginRight,
         marginBottom,
+        marginTop: marginBottom,
         ...props,
       }}
       onClick={onClick}
@@ -137,7 +139,7 @@ const SectionCardWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   position: absolute;
-  top: 0;
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0;

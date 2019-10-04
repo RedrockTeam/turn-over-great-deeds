@@ -31,6 +31,7 @@ export const Back = styled.div`
 const Title = styled.div`
   background-image: url(${ChooseTitle});
   background-size: cover;
+  margin: 70px auto 0 auto;
   height: 206px;
   width: 647px;
 `;
@@ -39,10 +40,10 @@ const Card = styled.div`
   background-image: url(${ChooseCard});
   background-size: cover;
   height: 948px;
-  width: 667px;
+  width: 669px;
   margin: 0 auto;
   & > div {
-    padding: 300px 90px 0 120px;
+    padding: 300px 100px 0 100px;
   }
 `;
 
@@ -53,32 +54,32 @@ const Item = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
+  .index {
+    width: 30px;
+    text-align: center;
+  }
 `;
 
-const LockUpIcon = styled.div`
-  background-image: url("${BaseLockUpPng}");
-  background-size: cover;
-  height: 50px;
-  width: 52px;
-`;
-
-const BaseUntieIcon = styled.div`
-  background-image: url("${BaseUntiePng}");
+const Lock = styled.div`
   background-size: cover;
   height: 55px;
   width: 52px;
 `;
 
+const LockUpIcon = styled(Lock)`
+  background-image: url("${BaseLockUpPng}");
+`;
+
+const BaseUntieIcon = styled(Lock)`
+  background-image: url("${BaseUntiePng}");
+`;
+
 const ChoosePage: React.FC = () => {
   const { data } = usePassTime();
-  const time: number[] = [];
-  Object.keys(data).forEach(i => {
-    // @ts-ignore
-    time.push(data[i]);
-  });
+  const time = Object.values(data);
   const { history } = useRouter();
   const handelClick = (step: number) => {
-    history.push(`/section/${step}`);
+    history.replace(`/section/${step}`);
   };
   return (
     <Wrapper>

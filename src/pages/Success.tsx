@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-px2vw';
-import { animated, useTrail } from 'react-spring';
+import { animated, useSpring, useTrail } from 'react-spring';
 import { Link } from 'react-router-dom';
 import { Theme } from '../styled';
 import SuccessTitlePng from '../assets/image/SuccessTitle.png';
 import SuccessCardPng from '../assets/image/SuccessCard.png';
-import { BaseRedButton } from '../component/BaseButton';
+import { BaseRedButton, BaseOrangeButton } from '../component/BaseButton';
 import { RankListMyIcon, RankListRankIcon } from './RankList';
 import { usePassAll } from '../utils/useFetch';
 import convertFloatToInt from '../utils/convertFloatToInt';
+import Snowfall from '../snowfall/Snowfal';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -33,9 +34,10 @@ const Title = styled(animated.div)`
 const Card = styled(animated.div)`
   background-size: cover;
   background-image: url("${SuccessCardPng}");
-  height: 469px;
+  height: 539px;
   width: 672px;
   margin: 0 auto;
+  z-index: 1;
 `;
 
 const Info = styled(animated.div)`
@@ -59,17 +61,41 @@ const Back = styled(Link)`
   }
 `;
 
+const Control = styled(animated.div)`
+  display: flex;
+  & > a:nth-child(1) {
+    margin-right: 40px;
+  }
+`;
+
+const Snow = styled(animated.div)`
+  position: absolute;
+  height: 200%;
+  width: 100%;
+  top: 120px;
+  z-index: 0;
+`;
+
 const SuccessPage: React.FC = () => {
   const Animation = useTrail(3, {
     transform: 'translate3d(0,0%,0)',
     opacity: 1,
     from: { transform: 'translate3d(0,-100%,0)', opacity: 0 },
-    delay: 500,
     config: {
       mass: 8,
       tension: 500,
       friction: 80,
     },
+  });
+  const SnowAnimation = useSpring({
+    opacity: 0,
+    from: { opacity: 1 },
+    config: {
+      mass: 8,
+      tension: 500,
+      friction: 80,
+    },
+    delay: 1000,
   });
   const { data: result } = usePassAll();
   useEffect(() => {
@@ -79,21 +105,35 @@ const SuccessPage: React.FC = () => {
     }
   }, [result]);
   return (
-    <Wrapper>
-      <Title style={Animation[2]} />
-      <Info style={Animation[1]}>
-        <RankListMyIcon />
-        <span>我的: {convertFloatToInt(result.totalTime)}s</span>
-        <RankListRankIcon />
-        <span>排名: {result.rank}</span>
-      </Info>
-      <Card style={Animation[0]} />
-      <animated.div style={Animation[2]}>
-        <Back to="/">
-          <BaseRedButton>返回首页</BaseRedButton>
-        </Back>
-      </animated.div>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Title style={Animation[2]}>
+          <Snow style={SnowAnimation}>
+            <Snowfall
+              // Changes the snowflake color
+              color="red"
+              // Controls the number of snowflakes that are created (default 150)
+              snowflakeCount={40}
+            />
+          </Snow>
+        </Title>
+        <Info style={Animation[1]}>
+          <RankListMyIcon />
+          <span>我的: {convertFloatToInt(result.totalTime)}s</span>
+          <RankListRankIcon />
+          <span>排名: {result.rank}</span>
+        </Info>
+        <Card style={Animation[0]} />
+        <Control style={Animation[2]}>
+          <Back replace to="/">
+            <BaseRedButton>返回首页</BaseRedButton>
+          </Back>
+          <Back replace to="/rankList">
+            <BaseOrangeButton>排行榜</BaseOrangeButton>
+          </Back>
+        </Control>
+      </Wrapper>
+    </>
   );
 };
 
